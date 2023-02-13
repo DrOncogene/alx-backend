@@ -1,18 +1,18 @@
 #!/usr/bin/env  python3
 """
-FIFO caching
+LIFO caching
 """
 from base_caching import BaseCaching
 
 
-class FIFOCache(BaseCaching):
+class LIFOCache(BaseCaching):
     """
-    FIFO caching class
+    LIFO caching class
     """
 
     def __init__(self):
         super().__init__()
-        self.last_idx = 0
+        self.last_item = None
 
     def put(self, key, item):
         """add to cache"""
@@ -22,9 +22,10 @@ class FIFOCache(BaseCaching):
         self.cache_data[key] = item
 
         if len(self.cache_data) > self.MAX_ITEMS:
-            items = list(self.cache_data.keys())
-            print(f'DISCARD: {items[0]}')
-            del self.cache_data[items[0]]
+            print(f'DISCARD: {self.last_item}')
+            del self.cache_data[self.last_item]
+
+        self.last_item = key
 
     def get(self, key):
         """get from cache"""
