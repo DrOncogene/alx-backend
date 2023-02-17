@@ -55,8 +55,11 @@ def get_locale():
     returns the correct
     or preferred locale
     """
-    locale = request.args.get('locale') or g.user.get('locale')
-    if locale:
+    param_locale = request.args.get('locale') if request.args else None
+    user_locale = g.user.get('locale') if g.user else None
+    locale = param_locale or user_locale
+
+    if locale and locale in app.config['LANGUAGES']:
         return locale
 
     return request.accept_languages.best_match(app.config['LANGUAGES'])
