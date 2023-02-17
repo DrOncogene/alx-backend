@@ -43,7 +43,7 @@ def before_request():
     """
     try:
         user_id = int(request.args.get('login_as'))
-    except ValueError:
+    except (ValueError, TypeError):
         user_id = None
 
     g.user = get_user(user_id)

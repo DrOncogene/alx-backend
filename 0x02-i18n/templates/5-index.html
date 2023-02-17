@@ -9,9 +9,9 @@
 <body>
   <h1>{{ _('Hello world!') }}</h1>
   {% if g.user is not none %}
-    {{ _('You are logged in as %(username)s', username=g.user.name) }}
+    <p> {{ _('You are logged in as %(username)s', username=g.user.name) }} </p>
   {% else %}
-    {{ _('You are not logged in') }}
+    <p> {{ _('You are not logged in') }} </p>
   {% endif %}
 </body>
 </html>
