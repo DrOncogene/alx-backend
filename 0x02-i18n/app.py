@@ -3,9 +3,10 @@
 simple flask app with I18n
 support using flask_babel
 """
+from datetime import datetime
 from typing import Union
 from flask import Flask, render_template, request, g
-from flask_babel import Babel
+from flask_babel import Babel, format_datetime
 from pytz import timezone
 from pytz.exceptions import UnknownTimeZoneError
 
@@ -79,7 +80,7 @@ def get_timezone() -> str:
 
     if not tz:
         return None
-    
+
     try:
         tz_info = timezone(tz)
     except UnknownTimeZoneError:
@@ -91,7 +92,8 @@ def get_timezone() -> str:
 @app.route('/', methods=['GET'], strict_slashes=False)
 def home():
     """index route"""
-    return render_template('7-index.html')
+    now = format_datetime(datetime.now(), 'medium')
+    return render_template('index.html', now=now)
 
 
 if __name__ == "__main__":
