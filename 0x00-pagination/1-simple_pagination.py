@@ -30,21 +30,8 @@ class Server:
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
 
-        pages = []
         start, end = index_range(page, page_size)
-
-        with open(self.DATA_FILE, newline='') as names:
-            csv_file = csv.reader(names)
-            csv_file.__next__()  # skip titles row
-
-            line = 0
-            for row in csv_file:
-                if line >= start and line < end:
-                    pages.append(row)
-                elif line >= end:
-                    break
-
-                line += 1
+        pages = self.dataset()[start:end]
         return pages
 
 

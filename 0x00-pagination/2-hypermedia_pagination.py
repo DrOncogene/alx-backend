@@ -30,35 +30,18 @@ class Server:
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
 
-        pages = []
         start, end = index_range(page, page_size)
-
-        with open(self.DATA_FILE, newline='') as names:
-            csv_file = csv.reader(names)
-            csv_file.__next__()  # skip titles row
-
-            line = 0
-            for row in csv_file:
-                if line >= start and line < end:
-                    pages.append(row)
-                elif line >= end:
-                    break
-
-                line += 1
+        pages = self.dataset()[start:end]
         return pages
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         """return a dict containing data and metadata for pages requested"""
-        len_dataset = 0
-        with open(self.DATA_FILE, newline='') as names:
-            csv_file = csv.reader(names)
-            csv_file.__next__()
-            len_dataset = len(list(csv_file))
-
+        len_dataset = len(self.dataset())
         page_data = self.get_page(page=page, page_size=page_size)
         total_pages = math.ceil(len_dataset / page_size)
         prev_page = page - 1 if page - 1 >= 1 else None
         next_page = page + 1 if page + 1 < total_pages else None
+
         return {
             'page_size': page_size,
             'page': page,
