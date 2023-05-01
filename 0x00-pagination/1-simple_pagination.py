@@ -31,14 +31,11 @@ class Server:
 
         pages = []
         start, end = index_range(page, page_size)
-        print(f'start: {start}, end: {end}')
 
         with open('Popular_Baby_Names.csv', newline='') as names:
             csv_file = csv.reader(names)
-            # num_of_rows = len(list(csv_file))
-            # if end >= num_of_rows:
-            #     return pages
             csv_file.__next__()  # skip titles row
+
             line = 0
             for row in csv_file:
                 if line >= start and line < end:
