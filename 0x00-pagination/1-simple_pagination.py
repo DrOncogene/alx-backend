@@ -33,7 +33,7 @@ class Server:
         pages = []
         start, end = index_range(page, page_size)
 
-        with open('Popular_Baby_Names.csv', newline='') as names:
+        with open(self.DATA_FILE, newline='') as names:
             csv_file = csv.reader(names)
             csv_file.__next__()  # skip titles row
 

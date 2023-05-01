@@ -26,13 +26,14 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
+        """returns a list of rows based on page and page_size"""
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
 
         pages = []
         start, end = index_range(page, page_size)
 
-        with open('Popular_Baby_Names.csv', newline='') as names:
+        with open(self.DATA_FILE, newline='') as names:
             csv_file = csv.reader(names)
             csv_file.__next__()  # skip titles row
 
@@ -49,7 +50,7 @@ class Server:
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         """return a dict containing data and metadata for pages requested"""
         len_dataset = 0
-        with open('Popular_Baby_Names.csv', newline='') as names:
+        with open(self.DATA_FILE, newline='') as names:
             csv_file = csv.reader(names)
             csv_file.__next__()
             len_dataset = len(list(csv_file))
