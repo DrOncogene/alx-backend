@@ -48,7 +48,7 @@ const jobs = [
   ];
 
 const queue = kue.createQueue();
-  
+
 for (const job of jobs) {
   const newJob = queue.create('push_notification_code_2', job).save((err) => {
     if (!err) {
